@@ -1,32 +1,42 @@
 import pygame
+import random
+
 def main():
+   xApple=random.randint(0,9)*40+20
+   yApple=random.randint(0,9)*40+20
    pygame.init()
    OknoGry=pygame.display.set_mode((400,400),0,32)
    run=True
-   zmienna1=140
-   zmienna2=140
+   zmienna1=120
+   zmienna2=120
    while(run):
+       pozycja=[1,2,3,5,7,"a","d"]
+       print("To jest tekst",pozycja)
        OknoGry.fill((0,0,0))
        pygame.time.delay(200)
-       wazShape=pygame.Rect((zmienna1,zmienna2),(47,47))
        #rysowanie weza
        wazShape=pygame.Rect((zmienna1,zmienna2),(40,40))
        pygame.draw.rect(OknoGry,(255,192,203),wazShape)
         #rysowanie jabłka
-       pygame.draw.circle(OknoGry,(0,255,0),(100,100),20)
+       pygame.draw.circle(OknoGry,(0,255,0),(xApple,yApple),20)
        for event in pygame.event.get():
            if event.type == pygame.QUIT:
                run=False
-@@ -20,12 +23,24 @@ def main():
-                   zmienna2=zmienna2-20
+           #ruch weza
+           elif event.type == pygame.KEYDOWN:
+               if event.key == pygame.K_UP:
+                   zmienna2=zmienna2-40
                elif event.key == pygame.K_DOWN:
-                   zmienna2=zmienna2+20
+                   zmienna2=zmienna2+40
                elif event.key == pygame.K_LEFT:
-                   zmienna1=zmienna1-20
+                   zmienna1=zmienna1-40
                elif event.key == pygame.K_RIGHT:
-                   zmienna1=zmienna1+20
-       #zmienna1=zmienna1+20
-       #zmienna2=zmienna2+20
+                   zmienna1=zmienna1+40
+       #waz zjada jablko
+       if zmienna1==xApple-20 and zmienna2==yApple-20:
+            xApple=random.randint(0,9)*40+20
+            yApple=random.randint(0,9)*40+20
+            pygame.draw.circle(OknoGry,(255,255,0),(xApple,yApple),20)
        #przejście strona prawa
        if zmienna1>400:
            zmienna1=0
@@ -39,6 +49,6 @@ def main():
         #przejście góra
        if zmienna2<0:
            zmienna2=400    
-        pygame.display.update()
+       pygame.display.update()
 
-main()
+main() 
